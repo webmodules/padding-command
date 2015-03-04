@@ -39,10 +39,10 @@ class PaddingCommand extends AbstractCommand {
   _getPadding(paragraph) {
     let prop = this._getProp(paragraph);
     let padding = paragraph.style[prop];
-    if (padding && padding.match('[0-9\.]+px')) return parseInt(padding);
+    if (padding && padding.match('[0-9\.]+px')) return parseInt(padding, 10);
 
     let style = window.getComputedStyle(paragraph);
-    return parseInt(style[prop]) || 0;
+    return parseInt(style[prop], 10) || 0;
   }
 
   _isParagraph(node) {
