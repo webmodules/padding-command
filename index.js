@@ -49,28 +49,31 @@ class PaddingCommand extends AbstractCommand {
     return node.nodeName == 'P';
   }
 
-  _findParagraph(node) {
+  _findClosestOrTopmost(node) {
     while (node && node != this.root) {
       if (this._isParagraph(node)) return node;
+      if (node.parentNode == this.root) return node;
       node = node.parentNode;
     }
     return null;
   }
 
   _findParagraphs(range) {
-    let firstParagraph = this._findParagraph(range.startContainer);
-    let lastParagraph = this._findParagraph(range.endContainer);
-    if (firstParagraph.parentNode != lastParagraph.parentNode) {
+    let firstNode = this._findClosestOrTopmost(range.startContainer);
+    let lastNode = this._findClosestOrTopmost(range.endContainer);
+    if (firstNode.parentNode != lastNode.parentNode) {
       // we don't handle this case yet
       return [];
     }
     let result = [];
-    for (let node = firstParagraph; node != lastParagraph; node = node.nextSibling) {
+    for (let node = firstNode; node != lastNode; node = node.nextSibling) {
       if (this._isParagraph(node)) {
         result.push(node);
       }
     }
-    result.push(lastParagraph);
+    if (this._isParagraph(lastNode)) {
+      result.push(lastNode);
+    }
     return result;
   }
 
