@@ -7,7 +7,7 @@
     "url": "https://github.com/webmodules/padding-command.git"
   },
   "main": "./build/index",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "babel-runtime": "4.7.4",
     "abstract-command": "2.0.0"
